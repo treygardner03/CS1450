@@ -68,10 +68,12 @@ public class GardnerTreyAssignment1 {
         		
         	}
 			
-			int totalIntegers = numbers.length - 1;
+			//displaying break down of odds and evens in file/array
+			int totalIntegers = numbers.length;
 			System.out.println("\nBreak down of values in written file: \nThe total number of integers: "
 			+ totalIntegers + "\nThe total number of even integers: " + even + 
 			"\nThe total number of odd integers: " + odd);
+			System.out.println("file is in directory: " + numbersFile.getAbsolutePath());
 			
 	//TASK 3: Read the values in the file and fill the even and odd arrays with no duplicates 
 		//Part B: creating two new arrays (Based on number of odds and evens written in file)
@@ -108,6 +110,7 @@ public class GardnerTreyAssignment1 {
         } catch (FileNotFoundException e) { 
         	System.out.println("File could not be found");
         }
+		//Part D: display even and odd arrays containing the values without duplicates
 		System.out.println("\nEven Numbers Array: ");
 		for(int i = 0; i < evenNumbers.length; i++){
 			System.out.println("\nevenNumbers[" + i + "] = " + evenNumbers[i]);
@@ -118,6 +121,7 @@ public class GardnerTreyAssignment1 {
 			System.out.println("\noddNumbers[" + i + "] = " + oddNumbers[i]);
 		}
 
+		//Part E: Movethe even and odd aray values into properly sized arrays
 		int[] fittedEvenNumbers = new int[even];
 		int[] fittedOddNumbers = new int[odd];
 
@@ -128,6 +132,7 @@ public class GardnerTreyAssignment1 {
 				fittedOddNumbers[i] = oddNumbers[i];	
 		}
 
+		//Part F: Display the properly sized arrays (G: assuming the number 0 will not be in the array)
 		System.out.println("\nEven Numbers Array: ");
 		for(int i = 0; i < fittedEvenNumbers.length; i++){
 			System.out.println("\nfittedEvenNumbers[" + i + "] = " + fittedEvenNumbers[i]);
