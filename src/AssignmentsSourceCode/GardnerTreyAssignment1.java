@@ -22,15 +22,24 @@ public class GardnerTreyAssignment1 {
     
     public static void main(String[] args){
     	
-    	//hardcoding array of numbers
+    //TASK 1: Create an array and fill it with values
+		//Part A: create array
         int[] numbers = {1, 18, 10, 2, 16, 8, 15, 9, 9, 17, 14, 18, 1, 19, 18, 2, 1};
-        //Displaying Array
-        System.out.println(numbers);
-        //sorting the arrray using "Arrays.sort();"
+        
+		//Part B: display array
+		for(int i = 0; i < numbers.length; i++) { 
+			System.out.println("The full array of unsorted integers: "
+			+ "\nnumbers[" + i + "] = " + numbers[i]);
+		}
+
+		//Part C: sort array
         Arrays.sort(numbers);         
-        //creating file for writing and reading
+
+	//TASK 2: Write Values in the array to a file in sorted order:
+		//Part A: create file and file object 
         File numbersFile = new File("assignment1.txt");
-        //creating counters for even and odd numbers inside numbers array
+		
+		//Part B, C, and D: Open file for writing, write all values in array to file, and close file
         int even = 0;
         int odd = 0;
         //writing array to outputfile
@@ -58,26 +67,35 @@ public class GardnerTreyAssignment1 {
         		
         	}
        
-        //Creating two new arrays for even and odd values
+	//TASK 3: Read the values in the file and fill the even and odd arrays with no duplicates 
+		//Part B: creating two new arrays (Based on number of odds and evens written in file)
         int[] evenNumbers = new int[even];
         int[] oddNumbers = new int[odd];
-        //Redefining even and odd as counters for future index
         even = 0;
         odd = 0;
-        //defining value being read by scanner
         int readValue;
-        //Reading values from files and writing into appropriate arrays with no duplicates
+		//Part A, C: reopening the file for reading and placing values in corresponding arrays
         try {
+			//Reading file and assigning first int to "readValue"
         	Scanner readFile = new Scanner(numbersFile);
         	for(int i = 0; i < numbers.length; i++) {
         		readValue = readFile.nextInt();
+				//is readValue even?
         		if(readValue%2 == 0) {
-        			evenNumbers[even] = readValue;
-        			even++;
-        		}
+					//checking if readValue is duplicate in evenNumbers array
+					if(even == 0 || readValue != evenNumbers[even-1]){
+        				evenNumbers[even] = readValue;
+						//index counter
+        				even++;
+   		     		}
+				}
         		else {
-        			oddNumbers[odd] = readValue;
-        			odd++;
+					//checking if readValue is duplicate in oddNumbers array
+					if(odd == 0 || readValue != oddNumbers[odd - 1]){
+        				oddNumbers[odd] = readValue;
+						//index counter
+        				odd++;
+					}
         		}
         	}
         	readFile.close();
