@@ -27,7 +27,7 @@ public class GardnerTreyAssignment1 {
         int[] numbers = {1, 18, 10, 2, 16, 8, 15, 9, 9, 17, 14, 18, 1, 19, 18, 2, 1};
         
 		//Part B: display array
-		for(int i = 0; i < numbers.length; i++) { 
+		for(int i = 0; i < numbers.length - 1; i++) { 
 			System.out.println("The full array of unsorted integers: "
 			+ "\nnumbers[" + i + "] = " + numbers[i]);
 		}
@@ -66,7 +66,12 @@ public class GardnerTreyAssignment1 {
         		System.out.println("File could not be found");
         		
         	}
-       
+			
+			int total_integers = numbers.length - 1;
+			System.out.println("Break down of values in written file: \nThe total number of integers: "
+			+ total_integers + "\nThe total number of even integers: " + even + 
+			"\nThe total number of odd integers: " + odd);
+			
 	//TASK 3: Read the values in the file and fill the even and odd arrays with no duplicates 
 		//Part B: creating two new arrays (Based on number of odds and evens written in file)
         int[] evenNumbers = new int[even];
