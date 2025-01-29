@@ -27,9 +27,10 @@ public class GardnerTreyAssignment1 {
         int[] numbers = {1, 18, 10, 2, 16, 8, 15, 9, 9, 17, 14, 18, 1, 19, 18, 2, 1};
         
 		//Part B: display array
+
+			System.out.println("The full array of unsorted integers: ");
 		for(int i = 0; i < numbers.length - 1; i++) { 
-			System.out.println("The full array of unsorted integers: "
-			+ "\nnumbers[" + i + "] = " + numbers[i]);
+			System.out.println("\nnumbers[" + i + "] = " + numbers[i]);
 		}
 
 		//Part C: sort array
@@ -49,7 +50,7 @@ public class GardnerTreyAssignment1 {
         	//Printing array and counting odds and evens
         	for(int i = 0; i<numbers.length; i++) {
         		//printing array numbers to file
-        		output.write(numbers[i]);
+        		output.println(numbers[i]);
         		//checking if value printed in divisible by 2 (is or is not even)
         		if(numbers[i]%2 == 0) {
         			//counting even numbers
@@ -68,7 +69,7 @@ public class GardnerTreyAssignment1 {
         	}
 			
 			int total_integers = numbers.length - 1;
-			System.out.println("Break down of values in written file: \nThe total number of integers: "
+			System.out.println("\nBreak down of values in written file: \nThe total number of integers: "
 			+ total_integers + "\nThe total number of even integers: " + even + 
 			"\nThe total number of odd integers: " + odd);
 			
@@ -82,9 +83,9 @@ public class GardnerTreyAssignment1 {
 		//Part A, C: reopening the file for reading and placing values in corresponding arrays
         try {
 			//Reading file and assigning first int to "readValue"
-        	Scanner readFile = new Scanner(numbersFile);
+        	Scanner input = new Scanner(numbersFile);
         	for(int i = 0; i < numbers.length; i++) {
-        		readValue = readFile.nextInt();
+        		readValue = input.nextInt();
 				//is readValue even?
         		if(readValue%2 == 0) {
 					//checking if readValue is duplicate in evenNumbers array
@@ -103,7 +104,7 @@ public class GardnerTreyAssignment1 {
 					}
         		}
         	}
-        	readFile.close();
+        	input.close();
         } catch (FileNotFoundException e) { 
         	System.out.println("File could not be found");
         }
