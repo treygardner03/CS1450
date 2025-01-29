@@ -48,7 +48,7 @@ public class GardnerTreyAssignment1 {
         //creating printwriter for file
         PrintWriter output = new PrintWriter("assignment1.txt");
         	//Printing array and counting odds and evens
-        	for(int i = 0; i<numbers.length; i++) {
+        	for(int i = 0; i < numbers.length; i++) {
         		//printing array numbers to file
         		output.println(numbers[i]);
         		//checking if value printed in divisible by 2 (is or is not even)
@@ -68,9 +68,9 @@ public class GardnerTreyAssignment1 {
         		
         	}
 			
-			int total_integers = numbers.length - 1;
+			int totalIntegers = numbers.length - 1;
 			System.out.println("\nBreak down of values in written file: \nThe total number of integers: "
-			+ total_integers + "\nThe total number of even integers: " + even + 
+			+ totalIntegers + "\nThe total number of even integers: " + even + 
 			"\nThe total number of odd integers: " + odd);
 			
 	//TASK 3: Read the values in the file and fill the even and odd arrays with no duplicates 
@@ -108,7 +108,25 @@ public class GardnerTreyAssignment1 {
         } catch (FileNotFoundException e) { 
         	System.out.println("File could not be found");
         }
-        
-        System.out.println("\tThe Even Number Arrays: " + evenNumbers + "\tThe Odd Number Array: " + oddNumbers);
-}
+		System.out.println("\nEven Numbers Array: ");
+		for(int i = 0; i < even; i++){
+			System.out.println("\nevenNumbers[" + i + "] = " + evenNumbers[i]);
+		}
+
+		System.out.println("\nOdd Numbers Array: ");
+		for(int i = 0; i < odd; i++){
+			System.out.println("\noddNumbers[" + i + "] = " + oddNumbers[i]);
+		}
+
+		int[] fittedEvenNumbers = new int[even];
+		int[] fittedOddNumbers = new int[odd];
+
+		for(int i = 0; i < even; i++){
+				fittedEvenNumbers[i] = evenNumbers[i];	
+		}
+		for(int i = 0; i < odd; i++){
+				fittedOddNumbers[i] = oddNumbers[i];	
+		}
+	} 
+
 }
