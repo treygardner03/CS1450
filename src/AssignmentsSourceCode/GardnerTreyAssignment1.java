@@ -109,12 +109,12 @@ public class GardnerTreyAssignment1 {
         	System.out.println("File could not be found");
         }
 		System.out.println("\nEven Numbers Array: ");
-		for(int i = 0; i < even; i++){
+		for(int i = 0; i < evenNumbers.length; i++){
 			System.out.println("\nevenNumbers[" + i + "] = " + evenNumbers[i]);
 		}
 
 		System.out.println("\nOdd Numbers Array: ");
-		for(int i = 0; i < odd; i++){
+		for(int i = 0; i < oddNumbers.length; i++){
 			System.out.println("\noddNumbers[" + i + "] = " + oddNumbers[i]);
 		}
 
@@ -127,6 +127,18 @@ public class GardnerTreyAssignment1 {
 		for(int i = 0; i < odd; i++){
 				fittedOddNumbers[i] = oddNumbers[i];	
 		}
+
+		System.out.println("\nEven Numbers Array: ");
+		for(int i = 0; i < fittedEvenNumbers.length; i++){
+			System.out.println("\nfittedEvenNumbers[" + i + "] = " + fittedEvenNumbers[i]);
+		}
+
+		System.out.println("\nOdd Numbers Array: ");
+		for(int i = 0; i < fittedOddNumbers.length; i++){
+			System.out.println("\nfittedOddNumbers[" + i + "] = " + fittedOddNumbers[i]);
+		}
+
+
 	} 
 
 }
