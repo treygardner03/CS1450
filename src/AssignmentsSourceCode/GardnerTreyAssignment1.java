@@ -70,7 +70,9 @@ public class GardnerTreyAssignment1 {
 			
 			//displaying break down of odds and evens in file/array
 			int totalIntegers = numbers.length;
-			System.out.println("\nBreak down of values in written file: \nThe total number of integers: "
+			System.out.println("\nBreak down of values in written file: "
+			+ "\n==========================================" 
+			+ "\nThe total number of integers: "
 			+ totalIntegers + "\nThe total number of even integers: " + even + 
 			"\nThe total number of odd integers: " + odd);
 			System.out.println("file is in directory: " + numbersFile.getAbsolutePath());
@@ -133,12 +135,13 @@ public class GardnerTreyAssignment1 {
 		}
 
 		//Part F: Display the properly sized arrays (G: assuming the number 0 will not be in the array)
-		System.out.println("\nEven Numbers Array: ");
+		System.out.println("\nProperly Sized Even Numbers Array: ");
 		for(int i = 0; i < fittedEvenNumbers.length; i++){
 			System.out.println("\nfittedEvenNumbers[" + i + "] = " + fittedEvenNumbers[i]);
 		}
 
-		System.out.println("\nOdd Numbers Array: ");
+
+		System.out.println("\nProperly Sized Odd Numbers Array: ");
 		for(int i = 0; i < fittedOddNumbers.length; i++){
 			System.out.println("\nfittedOddNumbers[" + i + "] = " + fittedOddNumbers[i]);
 		}
