@@ -5,7 +5,6 @@
  * Assignment #1
  * DESC: This program will show proficiency in creating an manipulating arrays and
  * reading/writing from files
-package AssignmentsSourceCode;
 */
 //package for all assignments
 package AssignmentsSourceCode;
