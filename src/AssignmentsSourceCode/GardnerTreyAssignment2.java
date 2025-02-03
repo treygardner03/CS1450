@@ -11,10 +11,9 @@
 package AssignmentsSourceCode;
 
 //importing Java packages
-import java.io.FileReader;
+import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
-import java.io.BufferedReader;
 
 //assignment class
 public class GardnerTreyAssignment2 {
@@ -26,7 +25,8 @@ public class GardnerTreyAssignment2 {
 	//Task A: Open the test files "Actors.txt" for reading 
 	//A.1: Creating Reader and opening file (in working directory)
 
-		Scanner reader = new Scanner("Actors.txt");
+		File actors = new File("Actors.txt");
+		Scanner reader = new Scanner(actors);
 	
 	//Task B: Create Polymorphic Array to store the actors
 		
@@ -40,34 +40,43 @@ public class GardnerTreyAssignment2 {
 
 		for(int i = 0; i < number_of_actors; i++) {
 			read_type = reader.next();
+			read_name = reader.nextLine();
 			
 			if(read_type.equals("Hero")) { 
-
+				actor[i] = new Hero(read_name);
 			}
 			
-			if(read_type.equals("Villian")) {
-				
+			if(read_type.equals("Villain")) {
+				actor[i] = new Villain(read_name);
 			}
 
 			if(read_type.equals("Monster")) {
-				
+				actor[i] = new Monster(read_name);
 			}
 
 			if(read_type.equals("Droid")) {
+				actor[i] = new Droid(read_name);
 				
 			}
 				
-			}
 		}
+		reader.close();
 	
 	//Task D: Print all Actor objects in table (After read and "write")
-	
-	//Task E: Create a Movie Object
+		System.out.println("\n============================================================");
+		System.out.printf("%-20s%-10s%-20s","Actor", "Type", "Motto to live by:");
+		System.out.println("\n============================================================");
 
+		for(int i = 0; i < actor.length; i++) {
+			System.out.printf("\n%-20s%-10s%-20s", actor[i].getName(), actor[i].getType(), actor[i].motto());
+		}
+		
+		Movie CS1450_movie = new Movie();
+		CS1450_movie.selectCast(actor);
+		CS1450_movie.printMovieDetails();
 	}
 
 }
-
 //Actor Classes:
 
 //Actor "super" class
@@ -119,11 +128,11 @@ class Hero extends Actor {
 	}
 }
 
-//Villian subclass
-class Villian extends Actor {
+//Villain subclass
+class Villain extends Actor {
 	
-	public Villian(String name) {
-		super(name, "Villian");
+	public Villain(String name) {
+		super(name, "Villain");
 	}	
 	
 	@Override
@@ -167,11 +176,44 @@ class Movie {
 	
 	public void selectCast(Actor[] actors) {
 		//determine how many heros/villians
-		
-		
-		//create and fill the actors_in_movie array
+	for(int j = 0; j < 2; j++) {
+		int index_counter = 0;
+		for(int i = 0; i < actors.length; i++ ) {
+
+			if(actors[i].getType().equals("Hero")) { 
+				this.number_of_heros++;
+
+				if(j == 1 && i < this.actors_in_movie.length) {
+					this.actors_in_movie[index_counter] = actors[i]; 
+					index_counter++;
+				}
+			}
+			else if(actors[i].getType().equals("Villain")) {
+				this.number_of_villains++;
+				
+				if(j == 1 && i < this.actors_in_movie.length) {
+					this.actors_in_movie[index_counter] = actors[i];
+					index_counter++;
+				}
+			}
+		}
+		if(j == 0) {
+		this.actors_in_movie = new Actor[this.number_of_heros + this.number_of_villains];
+		}
+	}
 	}
 
+	public void printMovieDetails() {
+		System.out.println("\n\n=================================\n"
+							+ "CS1450 Heros V.S. Villains Movie"
+						 + "\n=================================");
+			System.out.println("\nNumber of Heros " + this.number_of_heros
+							 + "\nNumber of Villains " + this.number_of_villains);
+
+		for(int i = 0; i < this.actors_in_movie.length; i++) {
+			System.out.printf("\n%7s\t--%20s", this.actors_in_movie[i].getType(), this.actors_in_movie[i].getName());
+		}
+	}
 }
 
 
