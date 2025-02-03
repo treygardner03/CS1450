@@ -25,6 +25,7 @@ public class GardnerTreyAssignment2 {
 	//Task A: Open the test files "Actors.txt" for reading 
 	//A.1: Creating Reader and opening file (in working directory)
 
+		//.txt file MUST be in current Working Directory
 		File actors = new File("Actors.txt");
 		Scanner reader = new Scanner(actors);
 	
