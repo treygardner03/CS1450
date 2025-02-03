@@ -35,9 +35,11 @@ public class GardnerTreyAssignment2 {
 		
 	//Task C: Fill the array with actor objects
 		
+		//declaring both name and type variables
 		String read_type;
 		String read_name;
 
+		//iterate through the list of actors and create objects, placing them in the array
 		for(int i = 0; i < number_of_actors; i++) {
 			read_type = reader.next();
 			read_name = reader.nextLine();
@@ -60,6 +62,7 @@ public class GardnerTreyAssignment2 {
 			}
 				
 		}
+		//closing scanner
 		reader.close();
 	
 	//Task D: Print all Actor objects in table (After read and "write")
@@ -67,10 +70,12 @@ public class GardnerTreyAssignment2 {
 		System.out.printf("%-20s%-10s%-20s","Actor", "Type", "Motto to live by:");
 		System.out.println("\n============================================================");
 
+		//iterating through each actor in the array and printing the required values
 		for(int i = 0; i < actor.length; i++) {
 			System.out.printf("\n%-20s%-10s%-20s", actor[i].getName(), actor[i].getType(), actor[i].motto());
 		}
 		
+		//declaring movie object and running both methods
 		Movie CS1450_movie = new Movie();
 		CS1450_movie.selectCast(actor);
 		CS1450_movie.printMovieDetails();
@@ -175,22 +180,30 @@ class Movie {
 	private Actor[] actors_in_movie;
 	
 	public void selectCast(Actor[] actors) {
+
 		//determine how many heros/villians
+	//Looping twice
 	for(int j = 0; j < 2; j++) {
+		//counter for actors_in_movie index
 		int index_counter = 0;
+		//iterating through actor array
 		for(int i = 0; i < actors.length; i++ ) {
 
+			//only incrementing #of heros and adding to new array if type hero 
 			if(actors[i].getType().equals("Hero")) { 
 				this.number_of_heros++;
 
+				//only adding to array after 2nd interation of outer loop
 				if(j == 1 && i < actors.length) {
 					this.actors_in_movie[index_counter] = actors[i]; 
 					index_counter++;
 				}
 			}
+			//only incrementing #of heros and adding to new array if type villain 
 			else if(actors[i].getType().equals("Villain")) {
 				this.number_of_villains++;
 				
+				//only adding to array after 2nd interation of outer loop
 				if(j == 1 && i < actors.length) {
 					this.actors_in_movie[index_counter] = actors[i];
 					index_counter++;
@@ -199,10 +212,13 @@ class Movie {
 		}
 		if(j == 0) {
 		this.actors_in_movie = new Actor[this.number_of_heros + this.number_of_villains];
+		this.number_of_heros = 0;
+		this.number_of_villains = 0;
 		}
 	}
 	}
 
+	//interating and printing Movie information (# of actors, actor information)
 	public void printMovieDetails() {
 		System.out.println("\n\n=================================\n"
 							+ "CS1450 Heros V.S. Villains Movie"
@@ -215,13 +231,3 @@ class Movie {
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
