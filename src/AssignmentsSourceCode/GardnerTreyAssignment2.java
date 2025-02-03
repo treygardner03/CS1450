@@ -183,7 +183,7 @@ class Movie {
 			if(actors[i].getType().equals("Hero")) { 
 				this.number_of_heros++;
 
-				if(j == 1 && i < this.actors_in_movie.length) {
+				if(j == 1 && i < actors.length) {
 					this.actors_in_movie[index_counter] = actors[i]; 
 					index_counter++;
 				}
@@ -191,7 +191,7 @@ class Movie {
 			else if(actors[i].getType().equals("Villain")) {
 				this.number_of_villains++;
 				
-				if(j == 1 && i < this.actors_in_movie.length) {
+				if(j == 1 && i < actors.length) {
 					this.actors_in_movie[index_counter] = actors[i];
 					index_counter++;
 				}
@@ -207,11 +207,11 @@ class Movie {
 		System.out.println("\n\n=================================\n"
 							+ "CS1450 Heros V.S. Villains Movie"
 						 + "\n=================================");
-			System.out.println("\nNumber of Heros " + this.number_of_heros
-							 + "\nNumber of Villains " + this.number_of_villains);
+			System.out.println("\nNumber of Heros: " + this.number_of_heros
+							 + "\nNumber of Villains: " + this.number_of_villains);
 
 		for(int i = 0; i < this.actors_in_movie.length; i++) {
-			System.out.printf("\n%7s\t--%20s", this.actors_in_movie[i].getType(), this.actors_in_movie[i].getName());
+			System.out.printf("\n%7s\t--%-20s", this.actors_in_movie[i].getType(), this.actors_in_movie[i].getName());
 		}
 	}
 }
