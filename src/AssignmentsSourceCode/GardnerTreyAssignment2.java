@@ -173,16 +173,16 @@ class Droid extends Actor {
 	}
 }
 
-//Movie class - only contains heros and villians
+//Movie class - only contains heroes and villians
 class Movie {
 
-	private int number_of_heros;
+	private int number_of_heroes;
 	private int number_of_villains;
 	private Actor[] actors_in_movie;
 	
 	public void selectCast(Actor[] actors) {
 
-		//determine how many heros/villians
+		//determine how many heroes/villians
 	//Looping twice
 	for(int j = 0; j < 2; j++) {
 		//counter for actors_in_movie index
@@ -190,9 +190,9 @@ class Movie {
 		//iterating through actor array
 		for(int i = 0; i < actors.length; i++ ) {
 
-			//only incrementing #of heros and adding to new array if type hero 
+			//only incrementing #of heroes and adding to new array if type hero 
 			if(actors[i].getType().equals("Hero")) { 
-				this.number_of_heros++;
+				this.number_of_heroes++;
 
 				//only adding to array after 2nd interation of outer loop
 				if(j == 1 && i < actors.length) {
@@ -200,7 +200,7 @@ class Movie {
 					index_counter++;
 				}
 			}
-			//only incrementing #of heros and adding to new array if type villain 
+			//only incrementing #of heroes and adding to new array if type villain 
 			else if(actors[i].getType().equals("Villain")) {
 				this.number_of_villains++;
 				
@@ -212,8 +212,8 @@ class Movie {
 			}
 		}
 		if(j == 0) {
-		this.actors_in_movie = new Actor[this.number_of_heros + this.number_of_villains];
-		this.number_of_heros = 0;
+		this.actors_in_movie = new Actor[this.number_of_heroes + this.number_of_villains];
+		this.number_of_heroes = 0;
 		this.number_of_villains = 0;
 		}
 	}
@@ -224,7 +224,7 @@ class Movie {
 		System.out.println("\n\n=================================\n"
 							+ "CS1450 Heros V.S. Villains Movie"
 						 + "\n=================================");
-			System.out.println("\nNumber of Heros: " + this.number_of_heros
+			System.out.println("\nNumber of Heros: " + this.number_of_heroes
 							 + "\nNumber of Villains: " + this.number_of_villains);
 
 		for(int i = 0; i < this.actors_in_movie.length; i++) {
