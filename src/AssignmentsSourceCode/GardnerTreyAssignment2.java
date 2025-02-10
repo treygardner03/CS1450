@@ -107,14 +107,6 @@ class Actor {
 		return this.type;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-	
 	//Actor motto
 	public String motto() {
 		return "This is my motto!";
