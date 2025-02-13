@@ -43,7 +43,7 @@ public class GardnerTreyAssignment3 {
 			read_skill_climbing = reader.nextInt();
 			
 			if(read_species.equals("Alligator")) {
-				all_animals[i] = new Alligator(read_name, read_skill_swimming, read_skill_running, read_skill_climbing);
+				all_animals[i] = new Alligator(read_name, read_skill_swimming, read_skill_running);
 			}
 
 			if(read_species.equals("Bear")) {
@@ -51,15 +51,15 @@ public class GardnerTreyAssignment3 {
 			}
 
 			if(read_species.equals("Giraffe")) {
-				all_animals[i] = new Giraffe(read_name, read_skill_swimming, read_skill_running, read_skill_climbing);
+				all_animals[i] = new Giraffe(read_name, read_skill_running);
 			}
 
 			if(read_species.equals("Monkey")) {
-				all_animals[i] = new Monkey(read_name, read_skill_swimming, read_skill_running, read_skill_climbing);
+				all_animals[i] = new Monkey(read_name, read_skill_running, read_skill_climbing);
 			}
 
 			if(read_species.equals("Sloth")) {
-				all_animals[i] = new Sloth(read_name, read_skill_swimming, read_skill_running, read_skill_climbing);
+				all_animals[i] = new Sloth(read_name, read_skill_swimming, read_skill_climbing);
 			}
 		}
 		
@@ -67,18 +67,45 @@ public class GardnerTreyAssignment3 {
 		display_animals(all_animals);
 		
 		//2.) Create array list that only holds animals that can climb
-		ArrayList<Animal> climbers = new find_climbers();
-		for(int i = 0; i < climbers.size(); i++) {
-			climbers.get(i).toString;
-		}
+		ArrayList<Animal> climbers = find_climbers(all_animals);
 
 		//3.) Find and Display the "Most Skilled" animal based on all 3 available skills
 		int most_skilled_index = find_most_skilled(all_animals);
-		all_animals[most_skilled_index].toString;
-		
 		
 	}
+	
+	//Finish Method!!
+	public static void display_animals(Animal[] animals) {
+		
+		for(int i = 0; i < animals.length; i++) {
+			System.out.println(animals[i].get_name() + " the " + animals[i].get_species() + " says " 
+							 + animals[i].make_noise() + " " + animals[i].make_noise() + " " + animals[i].make_noise() + "!!!");
+			
+			if(animals[i].get_species().equals("Alligator") || animals[i].get_species().equals("Bear") || animals[i].get_species().equals("Sloth")) {
+				System.out.println("Swimming Speed: " + animals[i].swim());
+			}
+		}
+	}
+	
+	public static ArrayList<Animal> find_climbers(Animal[] animals) {
+		int counter = 0;
+		ArrayList<Animal> climbers = new ArrayList();
+		
+		for(int i = 0; i < animals.length; i++) {
+			if(animals[i].get_species().equals("Bear") || animals[i].get_species().equals("Monkey") || animals[i].get_species().equals("Sloth")) {
+				counter++;
+				climbers.add(animals[i]);
+			}
+		}
+		return climbers;
+	}
 
+	//Finish Method!!!
+	public static int find_most_skilled(Animal[] animals) {
+		int most_skilled_index = 0;
+		for(int i = 0; i < animals.length; i++) {
+		}
+	}
 }
 
 interface Swimmer {
