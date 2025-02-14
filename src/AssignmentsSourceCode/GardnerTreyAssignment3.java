@@ -35,55 +35,94 @@ public class GardnerTreyAssignment3 {
 		int read_skill_climbing;
 		
 		//loop through .txt file and create objects
-		for(int i = 0; i <= number_of_animals; i++) {
+		for(int i = 0; i < number_of_animals; i++) {
 			read_name = reader.next();
 			read_species = reader.next();
 			read_skill_swimming = reader.nextInt();
 			read_skill_running = reader.nextInt();
 			read_skill_climbing = reader.nextInt();
 			
-			if(read_species.equals("Alligator")) {
+			if(read_species.equals("alligator")) {
 				all_animals[i] = new Alligator(read_name, read_skill_swimming, read_skill_running);
 			}
 
-			if(read_species.equals("Bear")) {
+			if(read_species.equals("bear")) {
 				all_animals[i] = new Bear(read_name, read_skill_swimming, read_skill_running, read_skill_climbing);
 			}
 
-			if(read_species.equals("Giraffe")) {
+			if(read_species.equals("giraffe")) {
 				all_animals[i] = new Giraffe(read_name, read_skill_running);
 			}
 
-			if(read_species.equals("Monkey")) {
+			if(read_species.equals("monkey")) {
 				all_animals[i] = new Monkey(read_name, read_skill_running, read_skill_climbing);
 			}
 
-			if(read_species.equals("Sloth")) {
+			if(read_species.equals("sloth")) {
 				all_animals[i] = new Sloth(read_name, read_skill_swimming, read_skill_climbing);
 			}
 		}
+		reader.close();
 		
 		//1.) Display all animals in array (neatly)
 		display_animals(all_animals);
 		
 		//2.) Create array list that only holds animals that can climb
 		ArrayList<Animal> climbers = find_climbers(all_animals);
+		display_climbers(climbers);
 
 		//3.) Find and Display the "Most Skilled" animal based on all 3 available skills
 		int most_skilled_index = find_most_skilled(all_animals);
 		
+		System.out.println("\n\nThe Most Skilled Animal Provided Is: \n " + all_animals[most_skilled_index].get_name());
+		
 	}
 	
-	//Finish Method!!
+	//display climbers (array lists)
+	private static void display_climbers(ArrayList<Animal> climbers) {
+		
+		System.out.println("\n\nAll Climbers!\n==============\n");
+		for(int i = 0; i < climbers.size(); i++) {
+			System.out.println("\n" + climbers.get(i).get_name() + " the " + climbers.get(i).get_species() + " says " 
+							 + climbers.get(i).make_noise() + " " + climbers.get(i).make_noise() + " " + climbers.get(i).make_noise() + "!!!");
+		
+			if(climbers.get(i) instanceof Swimmer) {
+				System.out.println("Swim Speed: " + ((Swimmer) climbers.get(i)).swim());
+			}
+
+			if(climbers.get(i) instanceof Runner) {
+				System.out.println("Run Speed: " + ((Runner)climbers.get(i)).run());
+			}
+
+			if(climbers.get(i) instanceof Climber) {
+				System.out.println("Climb Speed: " + ((Climber)climbers.get(i)).climb());
+			}
+		}
+	}
+
+	
+	//display animals (arrays)
 	public static void display_animals(Animal[] animals) {
 		
+		System.out.println("All Animals: \n==============\n");
 		for(int i = 0; i < animals.length; i++) {
 			System.out.println(animals[i].get_name() + " the " + animals[i].get_species() + " says " 
 							 + animals[i].make_noise() + " " + animals[i].make_noise() + " " + animals[i].make_noise() + "!!!");
-			
-			if(animals[i].get_species().equals("Alligator") || animals[i].get_species().equals("Bear") || animals[i].get_species().equals("Sloth")) {
-				System.out.println("Swimming Speed: " + animals[i].swim());
+		
+			if(animals[i] instanceof Swimmer) {
+				System.out.println("Swim Speed: " + ((Swimmer)animals[i]).swim());
 			}
+
+			if(animals[i] instanceof Runner) {
+				System.out.println("Run Speed: " + ((Runner)animals[i]).run());
+			}
+
+			if(animals[i] instanceof Climber) {
+				System.out.println("Climb Speed: " + ((Climber)animals[i]).climb());
+			}
+
+			
+			
 		}
 	}
 	
@@ -92,7 +131,7 @@ public class GardnerTreyAssignment3 {
 		ArrayList<Animal> climbers = new ArrayList();
 		
 		for(int i = 0; i < animals.length; i++) {
-			if(animals[i].get_species().equals("Bear") || animals[i].get_species().equals("Monkey") || animals[i].get_species().equals("Sloth")) {
+			if(animals[i] instanceof Climber) {
 				counter++;
 				climbers.add(animals[i]);
 			}
@@ -103,8 +142,41 @@ public class GardnerTreyAssignment3 {
 	//Finish Method!!!
 	public static int find_most_skilled(Animal[] animals) {
 		int most_skilled_index = 0;
+		int current_skill = 0;
+		int tested_skill = 0;
+		int swim_skill = 0;
+		int run_skill = 0; 
+		int climb_skill = 0;
 		for(int i = 0; i < animals.length; i++) {
+
+
+			if(animals[i] instanceof Swimmer) {
+				swim_skill = ((Swimmer)animals[i]).swim();
+			}
+
+			if(animals[i] instanceof Runner) {
+				run_skill = ((Runner)animals[i]).run();
+			}
+
+			if(animals[i] instanceof Climber) {
+				climb_skill = ((Climber)animals[i]).climb();
+			}
+
+			if(i == 0) {
+				current_skill = swim_skill + run_skill + climb_skill;
+				swim_skill = 0;
+				run_skill = 0;
+				climb_skill = 0;
+			}
+			
+			if(i > 0) {
+				if(tested_skill > current_skill) {
+					tested_skill = current_skill;
+					most_skilled_index = i;
+				}
+			}
 		}
+	return most_skilled_index;
 	}
 }
 
