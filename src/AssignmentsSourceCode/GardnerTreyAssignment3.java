@@ -1,8 +1,8 @@
 
 /*Name: Trey Gardner
  * Class: CS1450(M/W)
- * Due: Jan 29, 2025
- * Assignment #1
+ * Due: Feb 19th, 2025
+ * Assignment #3
  * DESC: This program will; Create a polymorphic array that holds animal objects created based on 
  * information read from a .txt file, Then display these animals and organize them based on specific criteria 
  */
