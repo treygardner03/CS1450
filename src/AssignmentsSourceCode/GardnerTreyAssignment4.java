@@ -11,12 +11,20 @@ that represent their locations and appear in their respective tarmac or terminal
 package AssignmentsSourceCode;
 
 import java.io.IOException;
+import java.util.Scanner;
+import java.io.File;
+
 
 public class GardnerTreyAssignment4 {
 
     public static void main(String[] args) throws IOException {
 
     //Step 1: Create a cargo terminal object
+    	//Finding parameters for cargo terminal:
+    	File planes = new File("FedExPlanes.txt");
+    	File trucks = new File("FedExTrucks.txt");
+    	Scanner reader = new Scanner(planes);
+    	
 
     //Step 2: Load cargo terminal with all semi-trucks and cargo planes in the files
     
@@ -66,12 +74,12 @@ class Cargo_Terminal {
     }
 
     public Semi_Truck get_semi_truck(int dock) {
-        
+       return this.loading_dock[dock]; 
     }
 
     public Cargo_Plane get_cargo_plane(int stand) {
-    
-    }
+    	return this.tarmac[stand];
+    } 
 
     public void display_cargo_terminal() {
 
