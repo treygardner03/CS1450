@@ -11,6 +11,9 @@ that represent their locations and appear in their respective tarmac or terminal
 package AssignmentsSourceCode;
 
 import java.io.IOException;
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 import java.io.File;
 
@@ -31,21 +34,18 @@ public class GardnerTreyAssignment4 {
     	Cargo_Terminal cargo_terminal = new Cargo_Terminal(number_of_docks, number_of_stands);
 
     //Step 2: Load cargo terminal with all semi-trucks and cargo planes in the files
+        System.out.println("\nLoading semi-trucks and planes into cargo terminal...\n");
     	Semi_Truck[] new_trucks = new Semi_Truck[number_of_docks];
     	Cargo_Plane[] new_planes = new Cargo_Plane[number_of_stands];
-    	int counter = 0;
-    	
+
     //creating and adding semi trucks from file
     	
     while(dock_reader.hasNext()) {
     	int dock_number = dock_reader.nextInt();
     	int truck_number = dock_reader.nextInt(); 
     	String destination = dock_reader.nextLine();
-    	new_trucks[counter] = new Semi_Truck(truck_number, destination);
-    	cargo_terminal.add_semi_truck(dock_number, new_trucks[j]);
-    	counter++;
+    	cargo_terminal.add_semi_truck(dock_number, new Semi_Truck(truck_number, destination));
     		}
-    	counter = 0;
     	dock_reader.close();
 
     //creating and adding planes from file
@@ -55,22 +55,43 @@ public class GardnerTreyAssignment4 {
     	int capacity = tarmac_reader.nextInt(); 
     	String cargo_type = tarmac_reader.next();
     	String destination = tarmac_reader.nextLine();
-    	new_planes[counter] = new Cargo_Plane(flight_number, capacity, cargo_type, destination);
-    	cargo_terminal.add_cargo_plane(stand_number, new_planes[counter]);
-    	counter++;
+    	cargo_terminal.add_cargo_plane(stand_number, new Cargo_Plane(flight_number, capacity, cargo_type, destination));
     		}
     tarmac_reader.close();
     			
     
     //Step 3: Display the cargo terminal
-
+    cargo_terminal.display_cargo_terminal();
     //Step 4: Print a status report for the cargo terminal
 
     }
 
-    public static void print_terminal_status(Cargo_Terminal terminal) {
+    public static void print_terminal_status(Cargo_Terminal cargo_terminal) {
+       ArrayList<Semi_Truck> semi_truck_list = new ArrayList<>();
+       ArrayList<Cargo_Plane> cargo_plane_list = new ArrayList<>();
+       for(int i = 0; i < cargo_terminal.get_number_of_docks(); i++ ) {
+           if(cargo_terminal.get_semi_truck(i) != null) {
+               semi_truck_list.add(cargo_terminal.get_semi_truck(i));
+           }
+       }
 
+       for(int i = 0; i < cargo_terminal.get_number_of_stands(); i++) {
+           if(cargo_terminal.get_cargo_plane(i) != null) {
+               cargo_plane_list.add(cargo_terminal.get_cargo_plane(i));
+           }
+       }
+
+       Collections.sort(semi_truck_list);
+       Collections.sort(cargo_plane_list);
+
+       for(int i = 0; i < semi_truck_list.size(); i++) {
+           System.out.println(semi_truck_list.get(i).toString());
+       }
+        for(int i = 0; i < cargo_plane_list.size(); i++) {
+            System.out.println(cargo_plane_list.get(i).toString());
+        }
     }
+
 }
 
 
@@ -119,7 +140,27 @@ class Cargo_Terminal {
     } 
 
     public void display_cargo_terminal() {
-    	//Big print method!!
+        System.out.println("\nCurrent Cargo Terminal :\n------------------------------------"
+                         + "\nCargo Terminal Stands: ");
+        for (int i = 0; i < this.loading_dock.length; i++) {
+            System.out.println("\nDock #" + i + ": ");
+            if(this.loading_dock[i] != null) {
+                System.out.println(this.loading_dock[i].get_truck_number());
+            }
+            else {
+                System.out.println("-----");
+        }
+        System.out.println("\nCurrent Cargo Planes: ");
+
+        for (int i = 0; i < this.tarmac.length; i++) {
+            System.out.println("\nStand #" + i + ": ");
+            if(this.tarmac[i] != null) {
+                System.out.println(this.tarmac[i].get_flight_number());
+            }
+            else {
+                System.out.println("-----");
+            }
+        }
     }
 }
 
@@ -153,6 +194,13 @@ class Cargo_Plane implements Comparable<Cargo_Plane>{
     @Override
     public int compareTo(Cargo_Plane other_cargo_plane) {
     	//Comparing based on destination city (alphabetical order)
+        if(this.capacity > other_cargo_plane.capacity) {
+            return 1;
+        }
+        if(this.capacity < other_cargo_plane.capacity) {
+            return -1;
+        }
+        return 0;
     }
 }
 
@@ -187,5 +235,14 @@ class Semi_Truck implements Comparable<Semi_Truck> {
     @Override
     public int compareTo(Semi_Truck other_semi_truck) {
     	//Comparing based on destination city (alphabetical order)
-    }
+        int compare_truck_number = this.destination_city.compareTo(other_semi_truck.get_destination_city());
+
+        if(compare_truck_number > 0) {
+            return 1;
+        }
+
+        if(compare_truck_number < 0) {
+            return -1;
+        }
+        return 0;
 }
