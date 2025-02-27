@@ -89,7 +89,7 @@ public class GardnerTreyAssignment4 {
             }
 
             System.out.println("\n----------------------\n\tTarmac Status:\n\t(By Capacity)\n--------------------\n");
-            System.out.printf("%-8s%-12s%16s%-14s\n","Flight#", "Destination City", "Capacity", "Cargo Type");
+            System.out.printf("%-8s%-18s%-16s%-14s\n","Flight#", "Destination City", "Cargo Type", "Capacity (lbs)");
             for (Cargo_Plane cargoPlane : cargo_plane_list) {
                 System.out.println(cargoPlane.toString());
             }
@@ -190,7 +190,7 @@ class Cargo_Plane implements Comparable<Cargo_Plane> {
         //public methods:
         @Override
         public String toString() {
-            return String.format("%-8d%-16s%-14s%-14.2f", flight_number, destination_city, cargo_type, capacity);
+            return String.format("%-8d%-18s%-16s%-14.2f", flight_number, destination_city, cargo_type, capacity);
         }
 
         @Override
