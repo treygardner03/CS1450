@@ -10,6 +10,8 @@
 package AssignmentsSourceCode;
 
 //Java imports
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.IOException;
 import java.util.Stack;
@@ -17,6 +19,11 @@ import java.util.Stack;
 public class GardnerTreyAssignment5 {
     //main
     public static void main(String[] args) {
+        //Creating Files to read from
+        File integers_1 = new File("integers1.txt");
+        File integers_2 = new File("integers2.txt");
+        File strings_1 = new File("strings1.txt");
+        File strings_2 = new File("strings2.txt");
         //array of integers
         int[] numbers = {0, 0, 4, 3, 0, 2, 1, 0, 0};
         //empty stack
@@ -30,8 +37,13 @@ public class GardnerTreyAssignment5 {
 
         //printing stack with no 0's then restoring to original state
         print_stack(numbers_stack);
+        //creating integer stacks from generic class
+        Generic_Stack<Integer> int_stack_1 = new Generic_Stack<Integer>();
+        Generic_Stack<Integer> int_stack_2 = new Generic_Stack<Integer>();
 
-
+        //filling integer stacks with values
+        fill_integer_stack(int_stack_1);
+        fill_integer_stack(int_stack_2);
     }
     //Replaces all 0's in stack with 10's
     public static void replace_zero_with_10(Stack<Integer> int_stack) {
@@ -68,8 +80,12 @@ public class GardnerTreyAssignment5 {
         }//for (restore original stack)
     }//print_stack
 
+    public static void fill_integer_stack(Stack<Integer> int_stack, File integers) {
+
+    }
+
 }//Assignment Class
 
 class Generic_Stack<E> {
-    
+   ArrayList<E> list = new ArrayList<E>();
 }
