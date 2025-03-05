@@ -71,7 +71,13 @@ public class GardnerTreyAssignment5 {
     }//replace_zeros_with_ten
 
     public static <E> void sort_stack(Generic_Stack<E> stack) {
+        E temp;
+        int open_space = 0;
+        Generic_Stack<E> temp_stack = new Generic_Stack<E>();
+        while (!stack.isEmpty()) {
+            temp = stack.pop();
 
+        }
     }
 
     //printing stack then restoring to original
@@ -94,14 +100,29 @@ public class GardnerTreyAssignment5 {
     }//print_stack
 
    public static <E> void print_stack(Generic_Stack<E> stack) {
+        //local values
+        E temp;
+        Generic_Stack<E> temp_stack = new Generic_Stack<E>();
+        //opening statement:
+       System.out.println("\nAll values in generic stack");
 
+       //printing each value in stack
+       while (!stack.isEmpty()) {
+           temp = stack.pop();
+           System.out.println("Stack Value :" + temp);
+           temp_stack.push(temp);
+       }
+       //restoring the original stack
+       while (!temp_stack.isEmpty()) {
+           stack.push(temp_stack.pop());
+       }
    }
 
     public static void fill_integer_stack(Generic_Stack<Integer> int_stack, File integers) {
         try {
             Scanner reader = new Scanner(integers);
             while (reader.hasNextInt()) {
-                int_stack.add(reader.nextInt());
+                int_stack.push(reader.nextInt());
             }//while loop
         } catch (IOException E) {
             System.out.println(E.getMessage());
@@ -112,7 +133,7 @@ public class GardnerTreyAssignment5 {
         try {
             Scanner reader = new Scanner(strings);
             while (reader.hasNextInt()) {
-                string_stack.add(reader.next());
+                string_stack.push(reader.next());
             }//while loop
         } catch (IOException E) {
             System.out.println(E.getMessage());
@@ -123,11 +144,39 @@ public class GardnerTreyAssignment5 {
 
 class Generic_Stack<E> {
     //private data fields
-    private ArrayList<E> list = new ArrayList<E>();
+    private ArrayList<E> list;
 
     //public methods
-    public void add(E e) {
-        list.add(e);
-    }//add body
+    public Generic_Stack() {
+    }
+    public boolean isEmpty() {
+        return list.isEmpty();
+    }//is empty body
+
+    public int get_size() {
+        return list.size();
+    }
+
+    public E peek() {
+        if (!isEmpty()) {
+            return list.get(get_size() - 1);
+        }
+        return null;
+    }
+
+    public E pop() {
+        if (!isEmpty()) {
+            return list.removeLast();
+        }
+        return null;
+    }
+
+    public void push(E e) {
+        if(isEmpty()) {
+          list.add(e);
+        } else {
+            list.add(list.size() - 1, e);
+        }
+    }
 
 }//Generic Stack Class
