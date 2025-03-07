@@ -75,13 +75,13 @@ public class GardnerTreyAssignment5 {
         sort_stack(string_stack_2);
 
         //Printing ALL sorted stacks
-        System.out.println("Sorted Integer Stack #1: values from file: " + integers_1.toString());
+        System.out.println("\n\nSorted Integer Stack #1: values from file: " + integers_1.toString());
         print_stack(int_stack_1);
-        System.out.println("\n\nInteger Stack #2: values from file: " + integers_2.toString());
+        System.out.println("\n\nSorted Integer Stack #2: values from file: " + integers_2.toString());
         print_stack(int_stack_2);
-        System.out.println("\n\nString Stack #1: values from file: " + strings_1.toString());
+        System.out.println("\n\nSorted String Stack #1: values from file: " + strings_1.toString());
         print_stack(string_stack_1);
-        System.out.println("\n\nString Stack #2: values from file: " + strings_2.toString());
+        System.out.println("\n\nSorted String Stack #2: values from file: " + strings_2.toString());
         print_stack(string_stack_2);
 
         //merging sorted integer stacks
@@ -89,9 +89,9 @@ public class GardnerTreyAssignment5 {
         Generic_Stack<String> merged_string_stack = merge_stacks(string_stack_1, string_stack_2);
 
         //Printing merged Stacks
-        System.out.println("Merged Integer Stack #1: values from file: " + integers_1.toString() + "and " + integers_2.toString());
+        System.out.println("\n\nMerged Integer Stack #1: values from file: " + integers_1.toString() + " and " + integers_2.toString());
         print_stack(merged_int_stack);
-        System.out.println("Merged String Stack #1: values from file: " + strings_1.toString() + "and " + strings_2.toString());
+        System.out.println("\n\nMerged String Stack #1: values from file: " + strings_1.toString() + " and " + strings_2.toString());
         print_stack(merged_string_stack);
 
     }
@@ -112,17 +112,32 @@ public class GardnerTreyAssignment5 {
     }//replace_zeros_with_ten
 
     public static <E extends Comparable<E>> void sort_stack(Generic_Stack<E> stack) {
-        E current_value;
-        int open_space = 0;
-        Generic_Stack<E> temp_stack = new Generic_Stack<>();
-        while (!stack.isEmpty()) {
-            current_value = stack.pop();
-            while (!temp_stack.isEmpty() && temp_stack.peek().compareTo(current_value) > 0) {
-                stack.push(temp_stack.pop());
+        //temporary generic stack
+        Generic_Stack<E> temp_stack = new Generic_Stack<E>();
+        E item_popped;
+        E item_temp;
+        while(!stack.isEmpty()) {
+            item_popped = stack.pop();
+            if (temp_stack.isEmpty()) {
+                temp_stack.push(item_popped);
+                continue;
             }
-            temp_stack.push(current_value);
+            item_temp = temp_stack.peek();
+            if (item_popped.compareTo(item_temp) < 0) {
+                temp_stack.push(item_popped);
+            }
+            else {
+                while (item_popped.compareTo(item_temp) >= 0) {
+                    stack.push(temp_stack.pop());
+                    if(!temp_stack.isEmpty()) {
+                        item_temp = temp_stack.peek();
+                    } else break;
+                }
+                temp_stack.push(item_popped);
+            }
+
         }
-        while (!temp_stack.isEmpty()) {
+        while(!temp_stack.isEmpty()) {
             stack.push(temp_stack.pop());
         }
     }//sort stack body
@@ -136,7 +151,7 @@ public class GardnerTreyAssignment5 {
             if(stack1.peek().compareTo(stack2.peek()) > 0) {
                 merged_stack.push(stack1.pop());
             }
-            if(stack1.peek().compareTo(stack2.peek()) < 0) {
+            else {
                 merged_stack.push(stack2.pop());
             }
         }
@@ -229,8 +244,9 @@ class Generic_Stack<E extends Comparable <E>> {
     public E peek() {
         if (!isEmpty()) {
             return stack.getLast();
+        } else {
+            return null;
         }
-        return null;
     }//peek body
 
     public E pop() {
