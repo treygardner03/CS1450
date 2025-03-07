@@ -71,13 +71,32 @@ public class GardnerTreyAssignment5 {
     }//replace_zeros_with_ten
 
     public static <E> void sort_stack(Generic_Stack<E> stack) {
-        E temp;
+        E current_value;
+        E temp_value;
         int open_space = 0;
         Generic_Stack<E> temp_stack = new Generic_Stack<E>();
         while (!stack.isEmpty()) {
-            temp = stack.pop();
+            current_value = stack.pop();
+            temp_value = stack.pop();
+            if (current_value > temp_value) {
+                temp_stack.push(temp_value);
+                temp_stack.push(current_value);
+            }
+        while (!temp_stack.isEmpty()) {
+            current_value = temp_stack.pop();
+            temp_value = temp_stack.pop();
+            if (current_value > temp_value) {
+                temp_stack.push(current_value);
+                temp_stack.push(temp_value);
+            }
+        }
 
         }
+    }
+
+    public static <E> void merge_stacks(Generic_Stack<E> stack1, Generic_Stack<E> stack2) {
+        Generic_Stack<E> temp_stack = new Generic_Stack<E>();
+
     }
 
     //printing stack then restoring to original
@@ -142,7 +161,7 @@ public class GardnerTreyAssignment5 {
 
 }//Assignment Class
 
-class Generic_Stack<E> {
+class Generic_Stack<E> implements Comparable {
     //private data fields
     private ArrayList<E> list;
 
@@ -177,6 +196,10 @@ class Generic_Stack<E> {
         } else {
             list.add(list.size() - 1, e);
         }
+    }
+    @Override
+    public int E compareTo(Generic_Stack<E> stack) {
+       if (this)
     }
 
 }//Generic Stack Class
