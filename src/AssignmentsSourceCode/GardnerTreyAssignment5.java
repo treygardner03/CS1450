@@ -31,111 +31,161 @@ public class GardnerTreyAssignment5 {
         //empty stack
         Stack<Integer> numbers_stack = new Stack<Integer>();
         //placing array values in stack
-        for (int number : numbers) {
-            numbers_stack.push(number);
+        for(int i = 0; i < numbers.length; i++) {
+            numbers_stack.push(numbers[i]);
         }
         //calling replace with 10's method
         replace_zero_with_10(numbers_stack);
 
         //printing stack with no 0's then restoring to original state
         print_stack(numbers_stack);
+
         //creating integer stacks from generic class
         Generic_Stack<Integer> int_stack_1 = new Generic_Stack<Integer>();
         Generic_Stack<Integer> int_stack_2 = new Generic_Stack<Integer>();
         Generic_Stack<String> string_stack_1 = new Generic_Stack<String>();
         Generic_Stack<String> string_stack_2 = new Generic_Stack<String>();
 
-        //filling integer stacks with values
+        //filling integer stacks with integers
         fill_integer_stack(int_stack_1, integers_1);
         fill_integer_stack(int_stack_2, integers_2);
+
+        //Printing values from integer stacks
+        System.out.println("\n\nInteger Stack #1: values from file: " + integers_1.toString());
+        print_stack(int_stack_1);
+
+        System.out.println("\n\nInteger Stack #2: values from file: " + integers_2.toString());
+        print_stack(int_stack_2);
 
         //filling string stacks with values
         fill_string_stack(string_stack_1, strings_1);
         fill_string_stack(string_stack_2, strings_2);
 
+        //Printing values from stacks with strings
+        System.out.println("\n\nString Stack #1: values from file: " + strings_1.toString());
+        print_stack(string_stack_1);
+
+        System.out.println("\n\nString Stack #2: values from file: " + strings_2.toString());
+        print_stack(string_stack_2);
+
+        //sorting ALL stacks
+        sort_stack(int_stack_1);
+        sort_stack(int_stack_2);
+        sort_stack(string_stack_1);
+        sort_stack(string_stack_2);
+
+        //Printing ALL sorted stacks
+        System.out.println("Sorted Integer Stack #1: values from file: " + integers_1.toString());
+        print_stack(int_stack_1);
+        System.out.println("\n\nInteger Stack #2: values from file: " + integers_2.toString());
+        print_stack(int_stack_2);
+        System.out.println("\n\nString Stack #1: values from file: " + strings_1.toString());
+        print_stack(string_stack_1);
+        System.out.println("\n\nString Stack #2: values from file: " + strings_2.toString());
+        print_stack(string_stack_2);
+
+        //merging sorted integer stacks
+        Generic_Stack<Integer> merged_int_stack = merge_stacks(int_stack_1, int_stack_2);
+        Generic_Stack<String> merged_string_stack = merge_stacks(string_stack_1, string_stack_2);
+
+        //Printing merged Stacks
+        System.out.println("Merged Integer Stack #1: values from file: " + integers_1.toString() + "and " + integers_2.toString());
+        print_stack(merged_int_stack);
+        System.out.println("Merged String Stack #1: values from file: " + strings_1.toString() + "and " + strings_2.toString());
+        print_stack(merged_string_stack);
+
     }
+
     //Replaces all 0's in stack with 10's
     public static void replace_zero_with_10(Stack<Integer> int_stack) {
         Stack<Integer> temp_stack = new Stack<Integer>();
-        int temp = 0;
-        for (int i = 0; i < int_stack.size(); i++) {
-           temp = int_stack.pop();
-           if(temp == 0) {
-               temp = 10;
-           }//if
-           temp_stack.push(temp);
-        }// for (replace zeros, in temp stack)
-        for (int j = 0; j < temp_stack.size(); j++) {
+        while(!int_stack.isEmpty()) {
+           int temp = int_stack.pop();
+            if (temp == 0) {
+                temp = 10;
+            }//if
+            temp_stack.push(temp);
+        }// while (replace zeros, in temp stack)
+        while(!temp_stack.isEmpty()) {
             int_stack.push(temp_stack.pop());
-        }//for (restoring original stack)
+        }//while (restoring original stack)
     }//replace_zeros_with_ten
 
-    public static <E> void sort_stack(Generic_Stack<E> stack) {
+    public static <E extends Comparable<E>> void sort_stack(Generic_Stack<E> stack) {
         E current_value;
-        E temp_value;
         int open_space = 0;
-        Generic_Stack<E> temp_stack = new Generic_Stack<E>();
+        Generic_Stack<E> temp_stack = new Generic_Stack<>();
         while (!stack.isEmpty()) {
             current_value = stack.pop();
-            temp_value = stack.pop();
-            if (current_value > temp_value) {
-                temp_stack.push(temp_value);
-                temp_stack.push(current_value);
+            while (!temp_stack.isEmpty() && temp_stack.peek().compareTo(current_value) > 0) {
+                stack.push(temp_stack.pop());
             }
+            temp_stack.push(current_value);
+        }
         while (!temp_stack.isEmpty()) {
-            current_value = temp_stack.pop();
-            temp_value = temp_stack.pop();
-            if (current_value > temp_value) {
-                temp_stack.push(current_value);
-                temp_stack.push(temp_value);
+            stack.push(temp_stack.pop());
+        }
+    }//sort stack body
+
+
+    public static <E extends Comparable<E>> Generic_Stack<E> merge_stacks(Generic_Stack<E> stack1, Generic_Stack<E> stack2) {
+        //final merged stack for return
+        Generic_Stack<E> merged_stack = new Generic_Stack<E>();
+
+        while(!stack1.isEmpty() && !stack2.isEmpty()) {
+            if(stack1.peek().compareTo(stack2.peek()) > 0) {
+                merged_stack.push(stack1.pop());
+            }
+            if(stack1.peek().compareTo(stack2.peek()) < 0) {
+                merged_stack.push(stack2.pop());
             }
         }
-
+        while(!stack1.isEmpty()) {
+            merged_stack.push(stack1.pop());
         }
-    }
-
-    public static <E> void merge_stacks(Generic_Stack<E> stack1, Generic_Stack<E> stack2) {
-        Generic_Stack<E> temp_stack = new Generic_Stack<E>();
-
+        while(!stack2.isEmpty()) {
+            merged_stack.push(stack2.pop());
+        }
+        return merged_stack;
     }
 
     //printing stack then restoring to original
     public static void print_stack(Stack<Integer> int_stack) {
         Stack<Integer> temp_stack = new Stack<>();
         int temp = 0;
+        int counter = 0;
         System.out.println("\nAll Values in stack after zeros are replaces with tens: \n"
-                         + "-------------------------------------------------------");
-        for (int i = 0; i < int_stack.size(); i++) {
+                + "-------------------------------------------------------");
+        while(!int_stack.isEmpty()) {
             temp = int_stack.pop();
-            System.out.print("Stack Value " + i + ": " + temp);
-            if(temp == 10) {
+            System.out.print("\nStack Value " + counter + ": " + temp);
+            if (temp == 10) {
                 temp = 0;
             }//if
             temp_stack.push(temp);
-        }//for (replace 10's with 0's
-        for (int j = 0; j < temp_stack.size(); j++) {
+            counter++;
+        }//while (replace 10's with 0's
+        while(!temp_stack.isEmpty()) {
             int_stack.push(temp_stack.pop());
-        }//for (restore original stack)
+        }//while (restore original stack)
     }//print_stack
 
-   public static <E> void print_stack(Generic_Stack<E> stack) {
+    public static <E extends Comparable<E>> void print_stack(Generic_Stack<E> stack) {
         //local values
         E temp;
         Generic_Stack<E> temp_stack = new Generic_Stack<E>();
-        //opening statement:
-       System.out.println("\nAll values in generic stack");
 
-       //printing each value in stack
-       while (!stack.isEmpty()) {
-           temp = stack.pop();
-           System.out.println("Stack Value :" + temp);
-           temp_stack.push(temp);
-       }
-       //restoring the original stack
-       while (!temp_stack.isEmpty()) {
-           stack.push(temp_stack.pop());
-       }
-   }
+        //printing each value in stack
+        while (!stack.isEmpty()) {
+            temp = stack.pop();
+            System.out.println("Stack Value :" + temp);
+            temp_stack.push(temp);
+        }
+        //restoring the original stack
+        while (!temp_stack.isEmpty()) {
+            stack.push(temp_stack.pop());
+        }
+    }
 
     public static void fill_integer_stack(Generic_Stack<Integer> int_stack, File integers) {
         try {
@@ -151,8 +201,8 @@ public class GardnerTreyAssignment5 {
     public static void fill_string_stack(Generic_Stack<String> string_stack, File strings) {
         try {
             Scanner reader = new Scanner(strings);
-            while (reader.hasNextInt()) {
-                string_stack.push(reader.next());
+            while (reader.hasNextLine()) {
+                string_stack.push(reader.nextLine());
             }//while loop
         } catch (IOException E) {
             System.out.println(E.getMessage());
@@ -161,45 +211,45 @@ public class GardnerTreyAssignment5 {
 
 }//Assignment Class
 
-class Generic_Stack<E> implements Comparable {
+class Generic_Stack<E extends Comparable <E>> {
     //private data fields
-    private ArrayList<E> list;
-
+    private ArrayList<E> stack;
     //public methods
     public Generic_Stack() {
+        stack = new ArrayList<E>();
     }
     public boolean isEmpty() {
-        return list.isEmpty();
+        return stack.isEmpty();
     }//is empty body
 
     public int get_size() {
-        return list.size();
-    }
+        return stack.size();
+    }//get size body
 
     public E peek() {
         if (!isEmpty()) {
-            return list.get(get_size() - 1);
+            return stack.getLast();
         }
         return null;
-    }
+    }//peek body
 
     public E pop() {
         if (!isEmpty()) {
-            return list.removeLast();
+            return stack.removeLast();
         }
         return null;
-    }
+    }//pop body
 
     public void push(E e) {
         if(isEmpty()) {
-          list.add(e);
+          stack.add(e);
         } else {
-            list.add(list.size() - 1, e);
+            stack.add(stack.size() - 1, e);
         }
-    }
-    @Override
-    public int E compareTo(Generic_Stack<E> stack) {
-       if (this)
+    }//push body
+
+    public int compareTo(E e) {
+        return Integer.compare(pop().compareTo(e), 0);
     }
 
 }//Generic Stack Class
