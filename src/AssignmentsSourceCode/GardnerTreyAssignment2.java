@@ -93,8 +93,8 @@ class Actor {
 	private String name;
 	
 	//super constructor
-	public Actor(String name, String type) {
-		this.name = name;
+	public Actor(String call, String type) {
+		this.name = call;
 		this.type = type;
 	}
 	

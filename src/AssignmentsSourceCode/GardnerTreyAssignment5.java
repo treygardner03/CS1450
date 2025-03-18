@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.IOException;
 import java.util.Stack;
+import java.util.Collections;
 
 public class GardnerTreyAssignment5 {
     //main
