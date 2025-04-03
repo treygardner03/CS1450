@@ -10,9 +10,7 @@ Description:
 package AssignmentsSourceCode;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Scanner;
+import java.util.*;
 import java.io.File;
 
 
@@ -22,8 +20,8 @@ public class GardnerTreyAssignment7 {
 
         //Step 1: Create a cargo terminal object
         //Finding parameters for cargo terminal:
-        File planes = new File("FedExPlanes.txt");
-        File trucks = new File("FedExTrucks.txt");
+        File planes = new File("FedExPlanes7.txt");
+        File trucks = new File("FedExTrucks7.txt");
         Scanner tarmac_reader = new Scanner(planes);
         Scanner dock_reader = new Scanner(trucks);
         int number_of_docks = dock_reader.nextInt();
@@ -58,12 +56,40 @@ public class GardnerTreyAssignment7 {
 
         //Step 3: Display the cargo terminal
         cargo_terminal.display_cargo_terminal();
-        //Step 4: Print a status report for the cargo terminal
-        print_terminal_status(cargo_terminal);
+
+
+    //Assignment #7 Start:
+        //creating traffic control
+        Air_Traffic_Controller air_traffic_controller = new Air_Traffic_Controller();
+
+        //creating taxiways
+        Taxiways taxiways = new Taxiways();
+
+        //creating runway
+        Runway runway = new Runway();
+
+        //moving planes from tarmac to taxiways
+        System.out.println("\nControl Tower: Moving planes from tarmac to taxiways..." +
+                           "\n-------------------------------------------------------\n");
+        air_traffic_controller.move_planes_to_taxiway(cargo_terminal, taxiways);
+
+        //Proving tarmac is empty
+        cargo_terminal.display_cargo_terminal();
+
+        //moving planes from taxiway to runway
+        System.out.println("\nControl Tower: Moving planes from tarmac to runway..." +
+                           "\n-----------------------------------------------------\n");
+        air_traffic_controller.move_planes_to_runway(taxiways, runway);
+
+        //clearing planes for takeoff
+        System.out.println("\nControl Tower: Clearing planes for takeoff!" +
+                           "\n-------------------------------------------\n");
+        air_traffic_controller.clear_for_takeoff(runway);
+
     }
 
-
-    public static void print_terminal_status (Cargo_Terminal cargo_terminal) {
+//print_terminal_status:
+  /*  public static void print_terminal_status (Cargo_Terminal cargo_terminal) {
         System.out.println("\nCargo Terminal status report:\n");
         ArrayList<Semi_Truck> semi_truck_list = new ArrayList<>();
         ArrayList<Cargo_Plane> cargo_plane_list = new ArrayList<>();
@@ -92,12 +118,13 @@ public class GardnerTreyAssignment7 {
         for (Cargo_Plane cargoPlane : cargo_plane_list) {
             System.out.println(cargoPlane.toString());
         }
-    }
+    }*/
 
 }
 
 //All Classes:
 
+//The entire tarmac and loading dock
 class Cargo_Terminal {
 
     //private data fields: 
@@ -125,25 +152,30 @@ class Cargo_Terminal {
     }
 
     //public methods:
+    //adds truck to specified dock
     public void add_semi_truck(int dock, Semi_Truck truck) {
         this.loading_dock[dock] = truck;
     }
 
+    //adds plane to specified stand
     public void add_cargo_plane(int stand, Cargo_Plane plane) {
         this.tarmac[stand] = plane;
     }
 
+    //returns truck at specified dock
     public Semi_Truck get_semi_truck(int dock) {
         return this.loading_dock[dock];
     }
 
+    //returns plane at specified stand
     public Cargo_Plane get_cargo_plane(int stand) {
         return this.tarmac[stand];
     }
 
+    //displays cargo terminal
     public void display_cargo_terminal() {
-        System.out.println("\nCurrent Cargo Terminal :\n------------------------------------"
-                + "\nCargo Terminal Stands: ");
+        System.out.println("\n------------------------------\nCurrent Cargo Terminal :\n------------------------------------"
+                + "\n\nCargo Loading Docks: \n-------------------------");
         for (int i = 0; i < this.loading_dock.length; i++) {
             System.out.println("\nDock #" + i + ": ");
             if (this.loading_dock[i] != null) {
@@ -152,7 +184,7 @@ class Cargo_Terminal {
                 System.out.println("-----");
             }
         }
-        System.out.println("\nCurrent Cargo Planes: ");
+        System.out.println("\nCargo Tarmac Stands: \n-----------------------------\n");
 
         for (int j = 0; j < this.tarmac.length; j++) {
             System.out.println("\nStand #" + j + ": ");
@@ -163,8 +195,20 @@ class Cargo_Terminal {
             }
         }
     }
+
+    //remove plane from current stand
+    public Cargo_Plane remove_plane(int stand) {
+        if (this.tarmac[stand] != null) {
+            Cargo_Plane plane = this.tarmac[stand];
+            this.tarmac[stand] = null;
+            return plane;
+        }
+        return null;
+    }
+
 }
 
+//Planes carrying cargo
 class Cargo_Plane implements Comparable<Cargo_Plane> {
 
         //private data fields:
@@ -187,24 +231,60 @@ class Cargo_Plane implements Comparable<Cargo_Plane> {
         }
 
         //public methods:
+
+        //checking priority
+        public boolean is_priority() {
+            return this.cargo_type.equals("Military") || this.cargo_type.equals("Perishables") || this.cargo_type.equals("Medical");
+
+        }
+
+        //checking basic
+        public boolean is_basic() {
+            return !this.cargo_type.equals("Military") && !this.cargo_type.equals("Perishables") && !this.cargo_type.equals("Medical");
+
+        }
+
         @Override
         public String toString() {
-            return String.format("%-8d%-18s%-16s%-14.2f", flight_number, destination_city, cargo_type, capacity);
+            return String.format("%-5d%-15s%-15s", flight_number, destination_city, cargo_type);
         }
 
         @Override
-        public int compareTo(Cargo_Plane other_cargo_plane) {
-            //Comparing based on destination city (alphabetical order)
-            if (this.capacity > other_cargo_plane.capacity) {
-                return 1;
+        public int compareTo(Cargo_Plane other_plane) {
+
+            //if not changed, plane is not priority
+            int current_cargo = 0;
+            int other_cargo = 0;
+
+            //assigning current plane
+            if(this.cargo_type.equals("Military")) {
+                current_cargo = 3;
             }
-            if (this.capacity < other_cargo_plane.capacity) {
-                return -1;
+            if(this.cargo_type.equals("Perishables")) {
+                current_cargo = 2;
             }
-            return 0;
+            if(this.cargo_type.equals("Medical")) {
+                current_cargo = 1;
+            }
+
+            //assigning other plane
+            if(other_plane.cargo_type.equals("Military")) {
+                other_cargo = 3;
+            }
+            if(other_plane.cargo_type.equals("Perishables")) {
+                other_cargo = 2;
+            }
+            if(other_plane.cargo_type.equals("Medical")) {
+                other_cargo = 1;
+            }
+
+            //comparing
+            return Integer.compare(other_cargo, current_cargo);
         }
+
     }
 
+//trucks carrying cargo
 class Semi_Truck implements Comparable<Semi_Truck> {
 
     //private data fields:
@@ -249,3 +329,137 @@ class Semi_Truck implements Comparable<Semi_Truck> {
     }
 }
 
+//The midway point between tarmac and runway
+class Taxiways {
+    //private data fields
+   private PriorityQueue<Cargo_Plane> priority_taxiway;
+   private Queue<Cargo_Plane> basic_taxiway;
+
+   //constructor
+    public Taxiways() {
+        this.priority_taxiway = new PriorityQueue<Cargo_Plane>();
+        this.basic_taxiway = new LinkedList<Cargo_Plane>();
+    }
+
+    //public methods
+
+    //IsEmpty
+    public boolean is_priority_taxiway_empty() {
+        return this.priority_taxiway.isEmpty();
+    }
+
+    //add - priority
+    public void add_priority_taxiway(Cargo_Plane plane) {
+        this.priority_taxiway.offer(plane);
+    }
+
+    //remove - priority
+    public Cargo_Plane remove_priority_taxiway() {
+        return this.priority_taxiway.poll();
+    }
+
+    //IsEmpty - basic
+    public boolean is_basic_taxiway_empty() {
+        return this.basic_taxiway.isEmpty();
+    }
+
+    //add - basic
+    public void add_basic_taxiway(Cargo_Plane plane) {
+        this.basic_taxiway.offer(plane);
+    }
+
+    //remove - basic
+    public Cargo_Plane remove_basic_taxiway() {
+        return this.basic_taxiway.poll();
+    }
+}
+
+//final leave space for cargo planes
+class Runway {
+    //private data fields
+    private Queue<Cargo_Plane> runway;
+
+    //public constructor
+    public Runway() {
+       this.runway = new LinkedList<Cargo_Plane>();
+    }
+
+    //public methods
+
+    //IsEmpty
+    public boolean is_runway_empty() {
+        return this.runway.isEmpty();
+    }
+
+    //add
+    public void add_runway(Cargo_Plane plane) {
+        this.runway.offer(plane);
+    }
+
+    //remove
+    public Cargo_Plane remove_runway() {
+        return this.runway.poll();
+    }
+
+}
+
+//organizes cargo plane transfers
+class Air_Traffic_Controller {
+    //private data fields - none
+
+    //public constructor - none
+
+    //public methods
+
+    //moving planes from tarmac to appropriate taxiway
+    public void move_planes_to_taxiway(Cargo_Terminal cargo_terminal, Taxiways taxiways) {
+        //rule #1: planes must be moved from tarmac in order of stand location
+        //rule #2: planes must be moved to correct taxiway based on cargo
+        for (int i = 0; i < cargo_terminal.get_number_of_stands(); i++) {
+
+            //checking stand status
+            if(cargo_terminal.get_cargo_plane(i) != null) {
+
+                //checking priority status
+                if (cargo_terminal.get_cargo_plane(i).is_priority()) {
+                    System.out.printf("Move to taxiway Priority: %s\n", cargo_terminal.get_cargo_plane(i).toString());
+                    taxiways.add_priority_taxiway(cargo_terminal.remove_plane(i));
+                }
+
+                //checking basic status
+                else if (cargo_terminal.get_cargo_plane(i).is_basic()) {
+                    System.out.printf("Move to taxiway Basic:    %s\n", cargo_terminal.get_cargo_plane(i).toString());
+                    taxiways.add_basic_taxiway(cargo_terminal.remove_plane(i));
+                }
+            }//null check
+        }//for loop
+    }//move planes to taxiway
+
+    //moving planes from taxiways to runway
+    public void move_planes_to_runway(Taxiways taxiway, Runway runway) {
+        //Rule #1: Move planes from priority first then from basic
+        //display "Moved to runway" message for each plane
+        while(!taxiway.is_priority_taxiway_empty()) {
+            Cargo_Plane plane = taxiway.remove_priority_taxiway();
+            System.out.printf("Move to runway: %s\n", plane.toString());
+            runway.add_runway(plane);
+        }
+        while(!taxiway.is_basic_taxiway_empty()) {
+            Cargo_Plane plane = taxiway.remove_basic_taxiway();
+            System.out.printf("Move to runway: %s\n", plane.toString());
+            runway.add_runway(plane);
+        }
+
+    }
+
+    //removing planes from runway
+    public void clear_for_takeoff(Runway runway) {
+        //display "Cleared for takeoff" message for each plane
+        while(!runway.is_runway_empty()) {
+            Cargo_Plane plane = runway.remove_runway();
+            System.out.printf("Clear for takeoff: %s\n", plane.toString());
+        }
+    }
+
+
+}
