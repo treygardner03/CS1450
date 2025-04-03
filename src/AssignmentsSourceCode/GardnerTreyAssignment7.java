@@ -1,10 +1,9 @@
 
 /*Name: Trey Gardner
 Class: CS1450 (M/W)
-Due: Feb 26th, 2025
-Assignment #4
-DESC: This program will; read truck and plane information from a file to generate objects
-that represent their locations and appear in their respective tarmac or terminal
+Due: March 2nd, 2025
+Assignment: #7
+Description:
 */
 
 //Homework package, remove before turning in
@@ -17,7 +16,7 @@ import java.util.Scanner;
 import java.io.File;
 
 
-public class GardnerTreyAssignment4 {
+public class GardnerTreyAssignment7 {
 
     public static void main(String[] args) throws IOException {
 
@@ -64,38 +63,38 @@ public class GardnerTreyAssignment4 {
     }
 
 
-        public static void print_terminal_status (Cargo_Terminal cargo_terminal) {
+    public static void print_terminal_status (Cargo_Terminal cargo_terminal) {
         System.out.println("\nCargo Terminal status report:\n");
-            ArrayList<Semi_Truck> semi_truck_list = new ArrayList<>();
-            ArrayList<Cargo_Plane> cargo_plane_list = new ArrayList<>();
-            for (int i = 0; i < cargo_terminal.get_number_of_docks(); i++) {
-                if (cargo_terminal.get_semi_truck(i) != null) {
-                    semi_truck_list.add(cargo_terminal.get_semi_truck(i));
-                }
-            }
-
-            for (int i = 0; i < cargo_terminal.get_number_of_stands(); i++) {
-                if (cargo_terminal.get_cargo_plane(i) != null) {
-                    cargo_plane_list.add(cargo_terminal.get_cargo_plane(i));
-                }
-            }
-
-            Collections.sort(semi_truck_list);
-            Collections.sort(cargo_plane_list);
-            System.out.println("\n----------------------------\n\tLoading Dock Status:\n\t(By Destination City)\n----------------------------\n");
-            System.out.printf("%-8s%-12s\n", "Truck#", "Destination City");
-            for (Semi_Truck semiTruck : semi_truck_list) {
-                System.out.println(semiTruck.toString());
-            }
-
-            System.out.println("\n----------------------\n\tTarmac Status:\n\t(By Capacity)\n--------------------\n");
-            System.out.printf("%-8s%-18s%-16s%-14s\n","Flight#", "Destination City", "Cargo Type", "Capacity (lbs)");
-            for (Cargo_Plane cargoPlane : cargo_plane_list) {
-                System.out.println(cargoPlane.toString());
+        ArrayList<Semi_Truck> semi_truck_list = new ArrayList<>();
+        ArrayList<Cargo_Plane> cargo_plane_list = new ArrayList<>();
+        for (int i = 0; i < cargo_terminal.get_number_of_docks(); i++) {
+            if (cargo_terminal.get_semi_truck(i) != null) {
+                semi_truck_list.add(cargo_terminal.get_semi_truck(i));
             }
         }
-}
 
+        for (int i = 0; i < cargo_terminal.get_number_of_stands(); i++) {
+            if (cargo_terminal.get_cargo_plane(i) != null) {
+                cargo_plane_list.add(cargo_terminal.get_cargo_plane(i));
+            }
+        }
+
+        Collections.sort(semi_truck_list);
+        Collections.sort(cargo_plane_list);
+        System.out.println("\n----------------------------\n\tLoading Dock Status:\n\t(By Destination City)\n----------------------------\n");
+        System.out.printf("%-8s%-12s\n", "Truck#", "Destination City");
+        for (Semi_Truck semiTruck : semi_truck_list) {
+            System.out.println(semiTruck.toString());
+        }
+
+        System.out.println("\n----------------------\n\tTarmac Status:\n\t(By Capacity)\n--------------------\n");
+        System.out.printf("%-8s%-18s%-16s%-14s\n","Flight#", "Destination City", "Cargo Type", "Capacity (lbs)");
+        for (Cargo_Plane cargoPlane : cargo_plane_list) {
+            System.out.println(cargoPlane.toString());
+        }
+    }
+
+}
 
 //All Classes:
 
@@ -249,3 +248,4 @@ class Semi_Truck implements Comparable<Semi_Truck> {
         return 0;
     }
 }
+
