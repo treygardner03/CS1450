@@ -6,17 +6,22 @@ Description: This program will; Simulate a train journey (represented by a Linke
 and "travel" to West Palm Beach, Florida with 4 stoops along the way. At each stop the "train cars" who have reached their
 destination will be removed and any new "train cars" waiting will be added.
  */
+
 //local package remove before turning in
 package AssignmentsSourceCode;
 
 //Libraries
 import java.util.LinkedList;
-
+import java.io.File;
+import java.util.Scanner;
+import java.io.FileNotFoundException;
 //main class
 public class GardnerTreyAssignment9 {
     //main
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
     //1. Assemble a train into single and doubly LinkedLists
+        File railcars_file = new File("Railcars.txt");
+        Scanner read_railcars = new Scanner(railcars_file);
         //A. Singly LinkedList (actual train?)
 
         //B. Doubly LinkedList (train history)
